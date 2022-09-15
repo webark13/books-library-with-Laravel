@@ -3,6 +3,7 @@
 @section('content')
     
     <div class=" mt-20 mx-auto">
+        <h2 class="text-center text-2xl font-bold mb-5">All your Issue Books</h2>
         <table class="table table-zebra mx-auto">
             <thead>
                 <tr class="">
@@ -12,7 +13,6 @@
                     <td>Author</td>
                     <td>Publisher</td>
                     <td>Issue Time</td>
-                    <td>Action</td>
                 </tr>
             </thead>
             <tbody>
@@ -31,13 +31,6 @@
                         <td>{{ $book->author }}</td>
                         <td>{{ $book->publisher }}</td>
                         <td>{{ $book->created_at }}</td>
-                        <td>
-                            <form action="{{ route('book_issues.return_book', ['issue_id' => $book->id]) }}" method="POST">
-                                @method('PUT')
-                                @csrf
-                                <input type="submit" class="btn btn-accent" value="Return">
-                            </form>
-                        </td>
                     </tr>
                 @endforeach
             </tbody>

@@ -14,7 +14,7 @@ class BookController extends Controller
     public function index()
     {
         $books = DB::table('books')
-            ->join('categories', 'categories.id', '=', 'books.cat_id')
+            ->join('categories', 'categories.id', '=', 'books.category_id')
             ->select('books.*', 'categories.name as category')->get();
 
         return view('books.index', ['books' => $books]);

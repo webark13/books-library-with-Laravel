@@ -66,10 +66,15 @@ class BookIssueController extends Controller
     public function all_issue_books()
     {
         $issued_books = DB::table('book_issues')
-                                ->where('issue', '=', 1)->get();
+                            ->join('books', 'books.id', '=', 'book_issues.book_id')
+                            ->join('categories', 'categories.id', '=', 'books.category_id')
+                            ->join('users', 'users.id', '=', 'book_issues.user_id')
+                            ->select('book_issues.*', 'books.title', 'books.author', 'categories.name as category', 'users.name')
+                            ->where('issue', '=', 1)
+                            ->get();
         return view('books.issued_books', [
-            'issued_books' => $issued_books
-        ])
+            'books' => $issued_books
+        ]);
     }
 
     // Return Back Issued Book
@@ -80,7 +85,7 @@ class BookIssueController extends Controller
         $book_issued->save();
 
         // Send Email to User When Book Returned Successfully
-        $user = Auth::user();
+        $user = User::find($book_issued->user_id);
         Mail::to($user->email)->send(new BookReturn);
 
         return redirect()->back()->with('message', 'You have successfully returned book');

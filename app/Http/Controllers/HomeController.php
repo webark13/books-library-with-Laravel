@@ -13,7 +13,7 @@ class HomeController extends Controller
     public function index()
     {
         $books = DB::table('books')
-            ->join('categories', 'categories.id', '=', 'books.cat_id')
+            ->join('categories', 'categories.id', '=', 'books.category_id')
             ->select('books.*', 'categories.name as category')->get();
 
         return view('index', ['books' => $books]);
@@ -23,7 +23,7 @@ class HomeController extends Controller
     {
         $term = $request->search;
         $books = DB::table('books')
-            ->join('categories', 'categories.id', '=', 'books.id')
+            ->join('categories', 'categories.id', '=', 'books.category_id')
             ->where('title', 'like', '%' . $term . '%')
             ->orWhere('author', 'like', '%' . $term . '%')
             ->select('books.*', 'categories.name as category')->get();

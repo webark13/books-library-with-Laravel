@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookIssueController;
+use App\Models\BookIssue;
 
 // Home Page with All Books
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
@@ -27,8 +28,6 @@ Route::middleware('guest')->group(function () {
 
     // Login User with Credentials
     Route::post('/users/login', [UserController::class, 'authenticate'])->name('users.authenticate');
-
-    // Issue Book to User
 });
 
 Route::middleware('auth')->group(function () {
@@ -41,8 +40,6 @@ Route::middleware('auth')->group(function () {
     // Request to Issue a Book
     Route::post('/issue/{book_id}', [BookIssueController::class, 'request_book'])->name('book_issues.request_book');
 
-    // Return Book Back
-    Route::put('/issue/{issue_id}', [BookIssueController::class, 'return_book'])->name('book_issues.return_book');
 });
 
 Route::middleware('admin')->group(function () {
@@ -69,9 +66,15 @@ Route::middleware('admin')->group(function () {
 
     // Get All Book Issue Request
     Route::get('/admin/issues', [BookIssueController::class, 'issue_requests'])->name('book_issues.issue_requests');
-
+    
     // Approve Request to Issue Book
     Route::post('admin/issue/book/{issue_id}', [BookIssueController::class, 'issue_book'])->name(('book_issues.issue_book'));
+    
+    // Get All Issued Books
+    Route::get('/admin/issue/books', [BookIssueController::class, 'all_issue_books'])->name('book_issues.all_issue_books');
+    
+    // Return Book Back
+    Route::put('/issue/{issue_id}', [BookIssueController::class, 'return_book'])->name('book_issues.return_book');
 
     // Category Resources
     Route::resource('admin/categories', CategoryController::class);

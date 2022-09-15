@@ -74,8 +74,9 @@ class UserController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $books = DB::table('books')
-                ->join('categories', 'categories.id', '=', 'books.cat_id')
-                ->select('books.*', 'categories.name as category')->get();
+                ->join('categories', 'categories.id', '=', 'books.category_id')
+                ->select('books.*', 'categories.name as category')
+                ->get();
 
             return view('books.index', ['books' => $books]);
         }

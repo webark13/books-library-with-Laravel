@@ -50,6 +50,8 @@
                 <li class="hover-bordered hover:bg-gray-600"><a href="{{ route('categories.create') }}">Add Category</a></li>
                 <li class="hover-bordered hover:bg-gray-600"><a href="{{ route('book_issues.issue_requests') }}">Issue
                         Requests</a></li>
+                <li class="hover-bordered hover:bg-gray-600"><a href="{{ route('book_issues.all_issue_books') }}">All Issued
+                        Books</a></li>
             </ul>
         </nav>
     @endif
